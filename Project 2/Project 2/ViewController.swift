@@ -18,6 +18,9 @@ class ViewController: UIViewController {
     
     var score = 0 {
         didSet {
+            if score < 0 {
+                score = 0
+            }
             scoreLabel.text = "Score: \(score)"
         }
     }
@@ -38,7 +41,7 @@ class ViewController: UIViewController {
         // Do any additional setup after loading the view.
         setUpButtons()
         
-        askQuestion()
+        nextQuestion()
     }
 
     private func setUpButtons() {
@@ -52,7 +55,7 @@ class ViewController: UIViewController {
     }
     
     
-    func askQuestion() {
+    func nextQuestion(_ alertAction: UIAlertAction? = nil) {
         questionsAsked += 1
         countries.shuffle()
         
@@ -61,37 +64,48 @@ class ViewController: UIViewController {
         button3.setImage(UIImage(named: countries[2]), for: .normal)
         
         correctAnswer = Int.random(in: 0...2)
-        title = countries[correctAnswer].uppercased() + " \(score)"
-        
+        title = countries[correctAnswer].uppercased()
     }
     
     
     @IBAction func flagTouched(_ sender: UIButton) {
         
-        if sender.tag == correctAnswer {
+        let userChoice = sender.tag
+        
+        if userChoice == correctAnswer {
             score += 1
+            presentAlertController(with: "Correct", message: "Your score is \(score)", actionHandler: nextQuestion)
+            
         } else {
-            scoreLabel.text = "Wrong!"
+            score -= 1
+            presentAlertController(with: "Wrong", message: "That's the flag of \(countries[userChoice])", actionHandler: nextQuestion)
         }
-        askQuestion()
     }
+    
+    
+    
+    private func presentAlertController(with title: String, message: String, actionHandler:  @escaping ((UIAlertAction?) -> Void )) {
+       
+        let alert = UIAlertController(title: title, message: message, preferredStyle: .alert)
+        let action = UIAlertAction(title: "OK", style: .default, handler: actionHandler)
+        
+        alert.addAction(action)
+        present(alert, animated: true)
+
+    }
+    
     
     
     private func finishGame() {
-        let alert = UIAlertController(title: "The end", message: "You answered \(numberOfQuestionsPerGame) the game is finished", preferredStyle: .alert)
         
-        let action = UIAlertAction(title: "OK", style: .default, handler: nil)
-        alert.addAction(action)
-        present(alert, animated: true) {
-            self.resetGame()
+        let gameOverMessage = "You answered correctly \(score) out of \(numberOfQuestionsPerGame) questions "
+        
+        presentAlertController(with: "The end", message: gameOverMessage) { _ in
+            self.score = 0
+            self.questionsAsked = 0
         }
     }
     
-    private func resetGame() {
-        score = 0
-        questionsAsked = 0
-        askQuestion()
-    }
     
 }
 
