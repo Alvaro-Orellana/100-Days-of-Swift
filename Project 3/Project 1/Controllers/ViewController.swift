@@ -48,16 +48,6 @@ class ViewController: UITableViewController {
     }
 
     
-    @IBAction func shareButtonPressed(_ sender: UIBarButtonItem) {
-        let messageToShare = "This is the message to share my app"
-        
-        let activityVC = UIActivityViewController(activityItems: [messageToShare], applicationActivities: [])
-        
-        present(activityVC, animated: true)
-    
-    }
-    
-    
     override func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         return picturesNames.count
     }

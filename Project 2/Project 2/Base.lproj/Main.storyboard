@@ -56,7 +56,13 @@
                             <constraint firstItem="sZD-PE-BfU" firstAttribute="centerX" secondItem="8I3-R8-GeD" secondAttribute="centerX" id="q7q-dK-NIs"/>
                         </constraints>
                     </view>
-                    <navigationItem key="navigationItem" id="CAP-a8-Q86"/>
+                    <navigationItem key="navigationItem" id="CAP-a8-Q86">
+                        <barButtonItem key="rightBarButtonItem" title="Item" image="eyes" catalog="system" id="JiS-U7-0Sr">
+                            <connections>
+                                <action selector="shareButtonTouched:" destination="BYZ-38-t0r" id="SW1-fV-BsD"/>
+                            </connections>
+                        </barButtonItem>
+                    </navigationItem>
                     <connections>
                         <outlet property="button1" destination="Jrl-nS-Gv0" id="7wz-rR-71H"/>
                         <outlet property="button2" destination="8I3-R8-GeD" id="Sly-i7-EC4"/>
@@ -88,6 +94,7 @@
         </scene>
     </scenes>
     <resources>
+        <image name="eyes" catalog="system" width="128" height="99"/>
         <image name="us" width="200" height="100"/>
         <systemColor name="systemYellowColor">
             <color red="1" green="0.80000000000000004" blue="0.0" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>

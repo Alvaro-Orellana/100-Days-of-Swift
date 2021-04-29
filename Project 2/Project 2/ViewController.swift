@@ -40,7 +40,6 @@ class ViewController: UIViewController {
         super.viewDidLoad()
         // Do any additional setup after loading the view.
         setUpButtons()
-        
         nextQuestion()
     }
 
@@ -68,23 +67,31 @@ class ViewController: UIViewController {
     }
     
     
+    @IBAction func shareButtonTouched(_ sender: UIBarButtonItem) {
+        presentAlertController("Score", message: "Current score: \(score)") { _ in
+            return
+        }
+    }
+    
+    
     @IBAction func flagTouched(_ sender: UIButton) {
         
         let userChoice = sender.tag
         
         if userChoice == correctAnswer {
             score += 1
-            presentAlertController(with: "Correct", message: "Your score is \(score)", actionHandler: nextQuestion)
+           // presentAlertController("Correct", message: "Your score is \(score)", actionHandler: nextQuestion)
+            nextQuestion()
             
         } else {
             score -= 1
-            presentAlertController(with: "Wrong", message: "That's the flag of \(countries[userChoice])", actionHandler: nextQuestion)
+            presentAlertController("Wrong", message: "That's the flag of \(countries[userChoice])", actionHandler: nextQuestion)
         }
     }
     
     
     
-    private func presentAlertController(with title: String, message: String, actionHandler:  @escaping ((UIAlertAction?) -> Void )) {
+    private func presentAlertController(_ title: String, message: String, actionHandler:  @escaping ((UIAlertAction?) -> Void )) {
        
         let alert = UIAlertController(title: title, message: message, preferredStyle: .alert)
         let action = UIAlertAction(title: "OK", style: .default, handler: actionHandler)
@@ -100,7 +107,7 @@ class ViewController: UIViewController {
         
         let gameOverMessage = "You answered correctly \(score) out of \(numberOfQuestionsPerGame) questions "
         
-        presentAlertController(with: "The end", message: gameOverMessage) { _ in
+        presentAlertController("The end", message: gameOverMessage) { _ in
             self.score = 0
             self.questionsAsked = 0
         }
