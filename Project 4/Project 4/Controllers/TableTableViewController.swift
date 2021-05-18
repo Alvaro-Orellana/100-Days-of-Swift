@@ -10,14 +10,14 @@ import UIKit
 class TableTableViewController: UITableViewController {
     
     
-    let allowedWebsites = ["google.com", "apple.com", "hackingwithswift.com", "amazon.com"]
+    let allowedWebsites = ["google.com", "apple.com", "hackingwithswift.com", "amazon.com", "tesla.com"]
     
     var selectedWebsite: String?
 
     override func viewDidLoad() {
         super.viewDidLoad()
         navigationController?.navigationBar.prefersLargeTitles = true
-
+//
     }
 
     // MARK: - Table view data source

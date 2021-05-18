@@ -11,10 +11,11 @@ class ViewController: UIViewController {
 
     @IBOutlet weak var randomColorsButton: UIButton!
     var labelsArray: [UILabel]!
+    var timer: Timer?
 
     var verticalSpaceBetweenLabels: CGFloat = 0
     var horizontalSpaceToSidesOfLabels: CGFloat = 0
-    var isChangingColors = false
+    var shouldChangeColors = false
     
 
     override func viewDidLoad() {
@@ -55,7 +56,6 @@ class ViewController: UIViewController {
     private func addAndPositionLabels(_ labels: [UILabel]) {
         
         let safeAreaAnchors = view.safeAreaLayoutGuide
-
         var previousLabel: UILabel?
         
         for label in labels {
@@ -68,10 +68,10 @@ class ViewController: UIViewController {
             
             
             if let previousLabel = previousLabel {
-                // Top of label is at the bottom anchor of the previous label which is on the top
+                // Places label's top beneath the previous label's bottom
                 label.topAnchor.constraint(equalTo: previousLabel.bottomAnchor, constant: verticalSpaceBetweenLabels).isActive = true
             } else {
-                // This is the top label
+                // This is the top and first label
                 label.topAnchor.constraint(equalTo: safeAreaAnchors.topAnchor).isActive = true
             }
             
@@ -79,13 +79,14 @@ class ViewController: UIViewController {
         }
     }
     
+    
     private func removeAllLabels() {
         for label in labelsArray {
             label.removeFromSuperview()
         }
     }
     
-    @IBAction func verticalSliderChanged(_ sender: UISlider) {
+    @IBAction private func verticalSliderChanged(_ sender: UISlider) {
         verticalSpaceBetweenLabels = CGFloat(sender.value)
         
         removeAllLabels()
@@ -93,7 +94,7 @@ class ViewController: UIViewController {
     }
     
     
-    @IBAction func horizontalSliderChanged(_ sender: UISlider) {
+    @IBAction private func horizontalSliderChanged(_ sender: UISlider) {
         horizontalSpaceToSidesOfLabels = CGFloat(sender.value) * 2
         
         removeAllLabels()
@@ -105,11 +106,10 @@ class ViewController: UIViewController {
     }
     
     
-    var timer: Timer?
-    @IBAction func randomColorsTouched(_ sender: UIButton) {
-        isChangingColors.toggle()
+    @IBAction private func randomColorsTouched(_ sender: UIButton) {
+        shouldChangeColors.toggle()
         
-        if isChangingColors {
+        if shouldChangeColors {
             timer = Timer.scheduledTimer(withTimeInterval: 0.1, repeats: true) { _ in
                 self.changeLabelsColors()
             }
@@ -119,12 +119,8 @@ class ViewController: UIViewController {
             timer?.invalidate()
             sender.setTitle("Random colors!", for: .normal)
         }
-        
-        
-        
-        
-        
     }
+    
     
     private func changeLabelsColors() {
         for label in labelsArray {
@@ -137,7 +133,9 @@ class ViewController: UIViewController {
 
 
 extension UIColor {
+    
     static func random() -> UIColor {
         return UIColor(red: CGFloat.random(in: 0...1), green: CGFloat.random(in: 0...1), blue: CGFloat.random(in: 0...1), alpha: 1)
     }
+    
 }
