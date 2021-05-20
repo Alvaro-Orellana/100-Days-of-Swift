@@ -61,7 +61,7 @@ class ViewController: UIViewController {
         for label in labels {
             view.addSubview(label)
             
-            label.heightAnchor.constraint(equalTo: safeAreaAnchors.heightAnchor, multiplier: CGFloat(1 / Double(labelsArray.count + 2) ), constant: -(verticalSpaceBetweenLabels)).isActive = true
+            label.heightAnchor.constraint(equalTo: safeAreaAnchors.heightAnchor, multiplier: CGFloat(1 / Double(labelsArray.count + 2)), constant: -(verticalSpaceBetweenLabels)).isActive = true
 
             label.leadingAnchor.constraint(equalTo: safeAreaAnchors.leadingAnchor, constant: horizontalSpaceToSidesOfLabels).isActive = true
             label.trailingAnchor.constraint(equalTo: safeAreaAnchors.trailingAnchor, constant: -horizontalSpaceToSidesOfLabels).isActive = true
@@ -85,6 +85,7 @@ class ViewController: UIViewController {
             label.removeFromSuperview()
         }
     }
+    
     
     @IBAction private func verticalSliderChanged(_ sender: UISlider) {
         verticalSpaceBetweenLabels = CGFloat(sender.value)

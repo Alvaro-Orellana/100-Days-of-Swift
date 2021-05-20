@@ -10,6 +10,7 @@ import UIKit
 class ViewController: UITableViewController {
     
     private(set) var shoppingList = [String]()
+    var activityController: UIActivityViewController?
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -34,8 +35,8 @@ class ViewController: UITableViewController {
     @objc private func shareButtonPressed() {
         let shoppingListAsOneString = shoppingList.joined(separator: "\n")
         
-        let activityController = UIActivityViewController(activityItems: [shoppingListAsOneString], applicationActivities: nil)
-        present(activityController, animated: true, completion: nil)
+        activityController = UIActivityViewController(activityItems: [shoppingListAsOneString], applicationActivities: nil)
+        present(activityController!, animated: true, completion: nil)
     }
     
     
@@ -44,6 +45,11 @@ class ViewController: UITableViewController {
     }
     
     @objc func deleteItemsButtonPressed() {
+        
+        guard !shoppingList.isEmpty else {
+            return
+        }
+        
         let alert = UIAlertController(title: "Delete all items", message: "Are you sure you want to delete everything in the list?", preferredStyle: .alert)
         
         let cancelAction = UIAlertAction(title: "Cancel", style: .default)
