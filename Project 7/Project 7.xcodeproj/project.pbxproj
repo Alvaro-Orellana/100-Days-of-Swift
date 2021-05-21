@@ -9,7 +9,7 @@
 /* Begin PBXBuildFile section */
 		AA1D88E3265586DB000E3CAA /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = AA1D88E2265586DB000E3CAA /* AppDelegate.swift */; };
 		AA1D88E5265586DB000E3CAA /* SceneDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = AA1D88E4265586DB000E3CAA /* SceneDelegate.swift */; };
-		AA1D88E7265586DB000E3CAA /* ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = AA1D88E6265586DB000E3CAA /* ViewController.swift */; };
+		AA1D88E7265586DB000E3CAA /* PetitionsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = AA1D88E6265586DB000E3CAA /* PetitionsViewController.swift */; };
 		AA1D88EA265586DB000E3CAA /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = AA1D88E8265586DB000E3CAA /* Main.storyboard */; };
 		AA1D88EC265586DD000E3CAA /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = AA1D88EB265586DD000E3CAA /* Assets.xcassets */; };
 		AA1D88EF265586DD000E3CAA /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = AA1D88ED265586DD000E3CAA /* LaunchScreen.storyboard */; };
@@ -21,7 +21,7 @@
 		AA1D88DF265586DB000E3CAA /* Project 7.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "Project 7.app"; sourceTree = BUILT_PRODUCTS_DIR; };
 		AA1D88E2265586DB000E3CAA /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		AA1D88E4265586DB000E3CAA /* SceneDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SceneDelegate.swift; sourceTree = "<group>"; };
-		AA1D88E6265586DB000E3CAA /* ViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ViewController.swift; sourceTree = "<group>"; };
+		AA1D88E6265586DB000E3CAA /* PetitionsViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PetitionsViewController.swift; sourceTree = "<group>"; };
 		AA1D88E9265586DB000E3CAA /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/Main.storyboard; sourceTree = "<group>"; };
 		AA1D88EB265586DD000E3CAA /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		AA1D88EE265586DD000E3CAA /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
@@ -62,15 +62,39 @@
 			children = (
 				AA1D88E2265586DB000E3CAA /* AppDelegate.swift */,
 				AA1D88E4265586DB000E3CAA /* SceneDelegate.swift */,
-				AA1D88E6265586DB000E3CAA /* ViewController.swift */,
-				AA1D88F82655EE2D000E3CAA /* DetailViewController.swift */,
-				AA1D88F62655E888000E3CAA /* Petitions.swift */,
-				AA1D88E8265586DB000E3CAA /* Main.storyboard */,
+				AA1D88FA2656C779000E3CAA /* Controllers */,
+				AA1D88FB2656C781000E3CAA /* Models */,
+				AA1D88FC2656C788000E3CAA /* Views */,
 				AA1D88EB265586DD000E3CAA /* Assets.xcassets */,
 				AA1D88ED265586DD000E3CAA /* LaunchScreen.storyboard */,
 				AA1D88F0265586DD000E3CAA /* Info.plist */,
 			);
 			path = "Project 7";
+			sourceTree = "<group>";
+		};
+		AA1D88FA2656C779000E3CAA /* Controllers */ = {
+			isa = PBXGroup;
+			children = (
+				AA1D88E6265586DB000E3CAA /* PetitionsViewController.swift */,
+				AA1D88F82655EE2D000E3CAA /* DetailViewController.swift */,
+			);
+			path = Controllers;
+			sourceTree = "<group>";
+		};
+		AA1D88FB2656C781000E3CAA /* Models */ = {
+			isa = PBXGroup;
+			children = (
+				AA1D88F62655E888000E3CAA /* Petitions.swift */,
+			);
+			path = Models;
+			sourceTree = "<group>";
+		};
+		AA1D88FC2656C788000E3CAA /* Views */ = {
+			isa = PBXGroup;
+			children = (
+				AA1D88E8265586DB000E3CAA /* Main.storyboard */,
+			);
+			path = Views;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -143,7 +167,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				AA1D88E7265586DB000E3CAA /* ViewController.swift in Sources */,
+				AA1D88E7265586DB000E3CAA /* PetitionsViewController.swift in Sources */,
 				AA1D88F72655E888000E3CAA /* Petitions.swift in Sources */,
 				AA1D88F92655EE2D000E3CAA /* DetailViewController.swift in Sources */,
 				AA1D88E3265586DB000E3CAA /* AppDelegate.swift in Sources */,

@@ -18,13 +18,14 @@ class DetailViewController: UIViewController {
         webView = WKWebView()
         view = webView
     }
-
+    
     override func viewDidLoad() {
         super.viewDidLoad()
-
+        
         // Do any additional setup after loading the view.
         guard let selectedPetition = selectedPetition else { return }
-
+        
+        let petitionDate = Date(timeIntervalSince1970: TimeInterval(selectedPetition.created))
         let htmlString =
             """
                 <html>
@@ -34,6 +35,10 @@ class DetailViewController: UIViewController {
                     </head>
             
                     <body>
+            
+                        <h3>\(selectedPetition.title)</h3>
+                           <h5> \(petitionDate.getFormattedDate()) </h5>
+                           <h5> Number of votes: \(selectedPetition.signatureCount) </h5>
                         \(selectedPetition.body)
                     </body>
                 </html>
@@ -41,15 +46,16 @@ class DetailViewController: UIViewController {
         webView.loadHTMLString(htmlString, baseURL: nil)
     }
     
+    
+}
 
-    /*
-    // MARK: - Navigation
 
-    // In a storyboard-based application, you will often want to do a little preparation before navigation
-    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
-        // Get the new view controller using segue.destination.
-        // Pass the selected object to the new view controller.
+extension Date {
+    func getFormattedDate() -> String {
+        let dateFormatter = DateFormatter()
+        dateFormatter.dateStyle = .medium
+        dateFormatter.timeStyle = .none
+        dateFormatter.locale = Locale.current
+        return dateFormatter.string(from: self)
     }
-    */
-
 }

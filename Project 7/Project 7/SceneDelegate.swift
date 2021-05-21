@@ -18,18 +18,22 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate {
         // This delegate does not imply the connecting scene or session are new (see `application:configurationForConnectingSceneSession` instead).
         guard let _ = (scene as? UIWindowScene) else { return }
         
+        createTopRatedDetailViewController()
         
-        
+    }
+    
+    private func createTopRatedDetailViewController() {
+        // Important. Here a new ViewController is created for the Top Rated tab bar, and assigns the TabBarItem a tag of 1
         if let tabBarController = window?.rootViewController as? UITabBarController {
             let storyBoard = UIStoryboard(name: "Main", bundle: nil)
             let navigationController = storyBoard.instantiateViewController(withIdentifier: "NavController")
             
             navigationController.tabBarItem = UITabBarItem(tabBarSystemItem: .topRated, tag: 1)
+            
             tabBarController.viewControllers?.append(navigationController)
         }
-        
-        
     }
+    
 
     func sceneDidDisconnect(_ scene: UIScene) {
         // Called as the scene is being released by the system.
