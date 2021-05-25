@@ -37,9 +37,10 @@ class DetailViewController: UIViewController {
                     <body>
             
                         <h3>\(selectedPetition.title)</h3>
-                           <h5> \(petitionDate.getFormattedDate()) </h5>
-                           <h5> Number of votes: \(selectedPetition.signatureCount) </h5>
+                        <h5> \(petitionDate.getFormattedDate()) </h5>
+                        <h5> Number of votes: \(selectedPetition.signatureCount) </h5>
                         \(selectedPetition.body)
+                        <h1> </h1>
                     </body>
                 </html>
             """
