@@ -15,7 +15,12 @@ class ViewController: UITableViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         // Do any additional setup after loading the view.
-        loadPicturesNames()
+        loadPicturesNames {
+            DispatchQueue.main.async {
+                self.tableView.reloadData()
+            }
+        }
+
         
         title = "mi app ☠️😺"
         navigationController?.navigationBar.prefersLargeTitles = true
@@ -32,19 +37,21 @@ class ViewController: UITableViewController {
     }
     
     
-    private func loadPicturesNames() {
-        let fm = FileManager.default
-        let path = Bundle.main.resourcePath!
-        let resources = try! fm.contentsOfDirectory(atPath: path)
+    private func loadPicturesNames(completionHandler: @escaping  () -> Void) {
+        DispatchQueue.global(qos: .userInteractive).async { [weak self] in
+            let fm = FileManager.default
+            let path = Bundle.main.resourcePath!
+            let resources = try! fm.contentsOfDirectory(atPath: path)
 
-        for resource in resources {
-            if resource.hasPrefix("nssl") {
-                // this is a picture to load!
-                picturesNames.append(resource)
+            for resource in resources {
+                if resource.hasPrefix("nssl") {
+                    // this is a picture to load!
+                    self?.picturesNames.append(resource)
+                }
             }
+            self?.picturesNames.sort()
+            completionHandler()
         }
-        picturesNames.sort()
-        print(picturesNames)
     }
 
     
@@ -80,7 +87,6 @@ class ViewController: UITableViewController {
             
             navigationController?.pushViewController(detailVC, animated: true)
         }
-
     }
 
 }

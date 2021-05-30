@@ -31,15 +31,13 @@ class PetitionsViewController: UITableViewController {
     
     private(set) var isShowingFilteredPetitions = false {
         didSet {
-            DispatchQueue.main.async { [self] in
-                if isShowingFilteredPetitions {
-                    doneBarButton.isEnabled = true
-                    lookUpBarButton.isEnabled = false
-                    
-                } else {
-                    doneBarButton.isEnabled = false
-                    lookUpBarButton.isEnabled = true
-                }
+            if isShowingFilteredPetitions {
+                doneBarButton.isEnabled = true
+                lookUpBarButton.isEnabled = false
+                
+            } else {
+                doneBarButton.isEnabled = false
+                lookUpBarButton.isEnabled = true
             }
         }
     }
@@ -93,23 +91,28 @@ class PetitionsViewController: UITableViewController {
     
     private func loadPetitions(from url: URL) {
         
-        if let jsonData = try? Data(contentsOf: url) {
-            // Downloaded data without problems
+        DispatchQueue.global(qos: .userInteractive).async { [weak self] in
             
-            do {
-                // Parse, sort and store petitions
-                let unsortedPetitions = try parseJson(from: jsonData)
-                self.allPetitions = sortPetitions(unsortedPetitions)
-                self.filteredPetitions = allPetitions
-         
-            } catch {
-                print("An error ocurred. PetitionsViewController/loadPetitions: \(error)")
-                // TODO: Improve error message.
-                showAlert(title: "Could't decode data", message: "Failed to decode petitions. This is a programmers error, probably cause the json wasnt decoded properly, Error: \(error.localizedDescription)")
+            guard let self = self else {return}
+            
+            if let jsonData = try? Data(contentsOf: url) {
+                // Downloaded data without problems
+                
+                do {
+                    // Parse, sort and store petitions
+                    let unsortedPetitions = try self.parseJson(from: jsonData)
+                    self.allPetitions = self.sortPetitions(unsortedPetitions)
+                    self.filteredPetitions = self.allPetitions
+             
+                } catch {
+                    print("An error ocurred. PetitionsViewController/loadPetitions: \(error)")
+                    // TODO: Improve error message.
+                    self.showAlert(title: "Could't decode data", message: "Failed to decode petitions. This is a programmers error, probably cause the json wasnt decoded properly, Error: \(error.localizedDescription)")
+                }
+                
+            } else {
+                self.showAlert(title: "Couldn't load data", message: "There was a problem loading the feed; please check your connection and try again.")
             }
-            
-        } else {
-            showAlert(title: "Couldn't load data", message: "There was a problem loading the feed; please check your connection and try again.")
         }
     }
     
@@ -126,7 +129,7 @@ class PetitionsViewController: UITableViewController {
     }
     
     
-    private func sortPetitions(_ petitions: [Petition]) -> [Petition] {
+    private func sortPetitions(_ petitions: [Petition] ) -> [Petition ] {
         
         var sortedPetitions: [Petition] = []
         
@@ -136,7 +139,7 @@ class PetitionsViewController: UITableViewController {
             
         } else if isTopRatedPetitionsViewController {
             // Sort by top rated
-            sortedPetitions =  petitions.sorted(by: { $0.signatureCount > $1.signatureCount })
+            sortedPetitions = petitions.sorted(by: { $0.signatureCount > $1.signatureCount })
             
         } else {
             // If no tabBarItem's tag matches just return the petitions unsorted
@@ -148,9 +151,12 @@ class PetitionsViewController: UITableViewController {
     
     
     private func showAlert(title: String, message: String) {
-        let alert = UIAlertController(title: title, message: message, preferredStyle: .alert)
-        alert.addAction(UIAlertAction(title: "OK", style: .default))
-        present(alert, animated: true)
+        DispatchQueue.main.async { [weak self] in
+            let alert = UIAlertController(title: title, message: message, preferredStyle: .alert)
+            alert.addAction(UIAlertAction(title: "OK", style: .default))
+            self?.present(alert, animated: true)
+        }
+      
     }
     
     
@@ -177,17 +183,14 @@ class PetitionsViewController: UITableViewController {
     
     
     private func filterPetitions(containing word: String) {
-        DispatchQueue.global(qos: .userInitiated).async { [self] in
-            // Returns array of petitions matching word written  by user
-            filteredPetitions = allPetitions.filter { petition in
-                // Ignores capitalization of selected word
-                let upperCased = word.uppercased()
-                
-                return petition.title.uppercased().contains(upperCased) || petition.body.uppercased().contains(upperCased)
-            }
-            isShowingFilteredPetitions = true
+        // Returns array of petitions matching word written  by user
+        filteredPetitions = allPetitions.filter { petition in
+            // Ignores capitalization of selected word
+            let upperCased = word.uppercased()
+            
+            return petition.title.uppercased().contains(upperCased) || petition.body.uppercased().contains(upperCased)
         }
-      
+        isShowingFilteredPetitions = true
     }
     
     

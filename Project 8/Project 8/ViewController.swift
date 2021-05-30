@@ -174,45 +174,41 @@ class ViewController: UIViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        loadLevel()
+        loadLevel { answersText, cluesText, subWords in
+            self.updateLabelsAndButtonsText(with: (answersText, cluesText, subWords))
+        }
     }
     
     
-    private func loadLevel() {
-        
-       // Reset corresponding variables before loading a level
-       resetGameStatus()
+    private func loadLevel(completionHandler: @escaping (String, String, [String]) -> Void) {
+        // Reset corresponding variables before loading a level
+        resetGameStatus()
         
         var cluesText = ""
         var answersText = ""
         var subWords = [String]()
         
-        if var lines = loadFile(with: currentLevel)?.components(separatedBy: "\n") {
+        DispatchQueue.global(qos: .userInteractive).async { [self] in
             
-            lines.shuffle()
-            
-            for (index, line) in lines.enumerated() {
-                let parts = line.components(separatedBy: ":")
-                let answer = parts[0]
-                let clue = parts[1]
+            do {
+                var lines = try loadFile(with: currentLevel).components(separatedBy: "\n")
+                lines.shuffle()
                 
-                let solutionWord = answer.replacingOccurrences(of: "|", with: "")
-                solutions.append(solutionWord)
+                // Parses each line
+                for (index, line) in lines.enumerated() {
+                    let (solutionWord, clue, answer) = parseLine(line)
+                    
+                    solutions.append(solutionWord)
+
+                    answersText += "\(solutionWord.count) Letters \n"
+                    cluesText += "\(index + 1) \(clue)\n"
+                    subWords += answer.components(separatedBy: "|")
+                }
                 
-                answersText += "\(solutionWord.count) Letters \n"
-                cluesText += "\(index + 1) \(clue)\n"
+                completionHandler(answersText, cluesText, subWords)
                 
-                subWords += answer.components(separatedBy: "|")
-            }
-        }
-        
-        answersLabel.text = answersText
-        cluesLabel.text = cluesText
-        
-        if letterButtons.count == subWords.count {
-            subWords.shuffle()
-            for index in letterButtons.indices {
-                letterButtons[index].setTitle(subWords[index], for: .normal)
+            } catch {
+                print(error.localizedDescription)
             }
         }
     }
@@ -228,13 +224,49 @@ class ViewController: UIViewController {
     }
     
     
-    private func loadFile(with currentLevel: Int) -> String? {
+    private func loadFile(with currentLevel: Int) throws -> String {
         let fileName = "level\(currentLevel)"
-        let levelsFileURL = Bundle.main.path(forResource: fileName, ofType: "txt")!
-        if let levelContents = try? String(contentsOfFile: levelsFileURL) {
-            return levelContents
+        if let levelsFileURL = Bundle.main.path(forResource: fileName, ofType: "txt") {
+            if let levelContents = try? String(contentsOfFile: levelsFileURL) {
+                return levelContents
+            }
         }
-        return nil
+        
+        throw FileLoadingError.NoSuchFileExists(message: "There's no such file named: \(fileName)")
+    }
+    
+    
+    private func parseLine(_ line: String) -> (String, String, String) {
+        let parts = line.components(separatedBy: ":")
+        let answer = parts[0]
+        let clue = parts[1]
+        
+        let solutionWord = answer.replacingOccurrences(of: "|", with: "")
+        
+        return (solutionWord, clue, answer)
+    }
+    
+    
+    
+    private func updateLabelsAndButtonsText(with results: (answersText: String, cluesText: String, subWords: [String]) ) {
+        DispatchQueue.main.async { [weak self] in
+            self?.answersLabel.text = results.answersText
+            self?.cluesLabel.text = results.cluesText
+            self?.updateButtonTitles(with: results.subWords)
+        }
+    }
+    
+    
+    private func updateButtonTitles(with buttonsSubWords: [String]) {
+        guard letterButtons.count == buttonsSubWords.count else {
+            fatalError("Argument passed to this function should have the same number of items a letter buttons")
+        }
+        
+        let shuffledWords = buttonsSubWords.shuffled()
+        
+        for index in letterButtons.indices {
+            letterButtons[index].setTitle(shuffledWords[index], for: .normal)
+        }
     }
     
     
@@ -265,7 +297,7 @@ class ViewController: UIViewController {
             score -= 1
         }
         
-        clearCurrentStatus(nil)
+        clearCurrentStatus()
     }
     
     
@@ -282,7 +314,7 @@ class ViewController: UIViewController {
     }
     
     
-    // This should only be called when a submitted answer is correct
+    // Should only be called when the submitted answer is correct
     private func updateAnswersAndCluesLabels(with submitedAnswer: String) {
         
         // TODO: Should make a check that solutions words never repeat.
@@ -314,20 +346,23 @@ class ViewController: UIViewController {
     
     private func levelUp() {
         currentLevel += 1
-        newLevelAlert()    }
+        newLevelAlert()
+    }
     
     
     private func newLevelAlert() {
         let alert = UIAlertController(title: "Level Finished", message: "Congratulations you answered correctly all the words in this level", preferredStyle: .alert)
         alert.addAction(UIAlertAction(title: "LET'S GOOOO", style: .default) { _ in
-            self.loadLevel()
+            self.loadLevel { answersText, cluesText, subWords in
+                self.updateLabelsAndButtonsText(with: (answersText, cluesText, subWords))
+            }
         })
         
         present(alert, animated: true)
     }
     
     
-    @objc private func clearCurrentStatus(_ sender: UIButton?) {
+    @objc private func clearCurrentStatus(_ sender: UIButton? = nil) {
         currentAnswer.text = ""
         characterCountLabel.text = "\(currentAnswer.text!.count) Letters"
         selectedButtons.removeAll()
@@ -335,7 +370,6 @@ class ViewController: UIViewController {
             button.isEnabled = true
         }
     }
-    
  
     
 }
