@@ -27,7 +27,8 @@ class ViewController: UICollectionViewController {
     
     override func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
        
-        guard let cell = collectionView.dequeueReusableCell(withReuseIdentifier: "PersonCell", for: indexPath) as? PersonCell else {
+        guard let cell = collectionView.dequeueReusableCell(withReuseIdentifier: "PersonCell", for: indexPath) as? PersonCell
+        else {
             fatalError("Could not deque cell for collection view")
         }
         
@@ -46,7 +47,7 @@ class ViewController: UICollectionViewController {
     
     
     @objc private func printAllPeople() {
-        print(people.description)
+        print(people)
     }
     
     
@@ -54,13 +55,34 @@ class ViewController: UICollectionViewController {
         // Create and present ImagePickerController
         let picker = UIImagePickerController()
         picker.allowsEditing = true
+        if UIImagePickerController.isSourceTypeAvailable(.camera) {
+            picker.sourceType = .camera
+        }
         picker.delegate = self
         present(picker, animated: true)
     }
     
     
     override func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
-        let selectedPerson = people[indexPath.item]
+        
+        // Creates and presents Alert Controller
+        let alert = UIAlertController(title: "Choose Action", message: nil, preferredStyle: .alert)
+        alert.addAction(UIAlertAction(title: "Change name", style: .default) { _ in
+            self.updateNameAlert(at: indexPath.item)
+        })
+        
+        alert.addAction(UIAlertAction(title: "Delete item", style: .destructive) { _ in
+            self.deletePerson(at: indexPath.item)
+        })
+        
+        alert.addAction(UIAlertAction(title: "Cancel", style: .default))
+        
+        present(alert, animated: true)
+    }
+    
+    
+    private func updateNameAlert(at index: Int) {
+        let selectedPerson = people[index]
         
         let alert = UIAlertController(title: "Update name", message: nil, preferredStyle: .alert)
         alert.addTextField()
@@ -68,13 +90,27 @@ class ViewController: UICollectionViewController {
         alert.addAction(UIAlertAction(title: "Ok", style: .default) { _ in
             if let newName = alert.textFields?[0].text {
                 selectedPerson.name = newName
-                collectionView.reloadData()
+                self.collectionView.reloadData()
             }
         })
         
         alert.addAction(UIAlertAction(title: "Cancel", style: .default))
         
         present(alert, animated: true)
+    }
+    
+    
+    private func deletePerson(at index: Int) {
+        // TODO: Remove from disk
+        let imagePath  = getDocumentsDirectory().appendingPathComponent(people[index].imageId) // Location where photo is be saved
+        do {
+            try FileManager.default.removeItem(at: imagePath)
+            people.remove(at: index)
+            collectionView.reloadData()
+
+        } catch {
+            print("Couldn't delete image from disk. Error: \(error)")
+        }
     }
     
 }
@@ -97,7 +133,7 @@ extension ViewController: UIImagePickerControllerDelegate, UINavigationControlle
 
 
 
-// MARK: - File System interactiong functions
+// MARK: - File System interacting functions
 extension ViewController {
    
     private func saveImageToDisk(image: Data) {
@@ -112,12 +148,13 @@ extension ViewController {
         } catch  {
             print("Couldn't save image to data. Error: \(error)")
         }
-        
     }
+    
   
     private func getDocumentsDirectory() -> URL {
         let documentsPath = FileManager.default.urls(for: .documentDirectory, in: .userDomainMask)
         return documentsPath[0]
     }
+    
 }
 
