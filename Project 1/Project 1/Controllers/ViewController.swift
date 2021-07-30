@@ -22,7 +22,7 @@ class ViewController: UITableViewController {
         }
 
         
-        title = "mi app ☠️😺"
+        title = "Storm Viewer"
         navigationController?.navigationBar.prefersLargeTitles = true
     }
     

@@ -12,6 +12,13 @@ class DetailViewController: UIViewController {
     
     var selectedPetition: Petition?
     var webView: WKWebView!
+    var searchWord: String?
+    
+    // TODO: - Consider pasing
+//    init(selectedPetition: Petition?, searchWord: String?) {
+//        self.selectedPetition = selectedPetition
+//        self.searchWord = searchWord
+//    }
     
     
     override func loadView() {
@@ -21,6 +28,8 @@ class DetailViewController: UIViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
+                
+      
         
         // Do any additional setup after loading the view.
         guard let selectedPetition = selectedPetition else { return }

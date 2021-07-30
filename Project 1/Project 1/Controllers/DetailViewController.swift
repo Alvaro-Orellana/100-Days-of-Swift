@@ -8,6 +8,8 @@
 import UIKit
 
 class DetailViewController: UIViewController {
+    
+    var vc: ViewController = ViewController()
 
     @IBOutlet weak var imageView: UIImageView!
     var imageName: String?
@@ -23,6 +25,8 @@ class DetailViewController: UIViewController {
         if let selectedImage = imageName {
             imageView.image = UIImage(named: selectedImage)
         }
+        
+        
     }
     
 

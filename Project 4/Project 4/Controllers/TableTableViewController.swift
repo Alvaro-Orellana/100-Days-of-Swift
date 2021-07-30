@@ -10,7 +10,7 @@ import UIKit
 class TableTableViewController: UITableViewController {
     
     
-    let allowedWebsites = ["google.com", "apple.com", "hackingwithswift.com", "amazon.com", "tesla.com"]
+    let allowedWebsites = ["google.com", "apple.com", "hackingwithswift.com", "amazon.com", "tesla.com", "mercadolibre.com.ar", "rappi.com.ar"]
     
     var selectedWebsite: String?
 

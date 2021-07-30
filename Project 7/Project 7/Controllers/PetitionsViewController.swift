@@ -14,6 +14,26 @@ class PetitionsViewController: UITableViewController {
     @IBOutlet weak var doneBarButton: UIBarButtonItem!
     @IBOutlet weak var lookUpBarButton: UIBarButtonItem!
     private let rowHeight = 60
+    
+    var searchWord: String? {
+        didSet {
+            
+            
+            if searchWord == nil {
+                DispatchQueue.main.async { [weak self] in
+                    self?.navigationController?.navigationBar.prefersLargeTitles = true
+                    self?.title = "White House Petitions"
+                }
+                
+
+            } else {
+                DispatchQueue.main.async { // [weak self] in
+                    self.navigationController?.navigationBar.prefersLargeTitles = false
+                    self.title = "Articles containing: \( self.searchWord! )"
+                }
+            }
+        }
+    }
 
     
     // This is to store and keep all the petitions without filtering,
@@ -176,25 +196,29 @@ class PetitionsViewController: UITableViewController {
     }
     
     
-    private func filterPetitions(containing word: String) {
-        DispatchQueue.global(qos: .userInitiated).async { [self] in
+    private func filterPetitions(containing searchWord: String) {
+        DispatchQueue.global(qos: .userInitiated).async { [ weak self] in
             // Returns array of petitions matching word written  by user
-            filteredPetitions = allPetitions.filter { petition in
-                // Ignores capitalization of selected word
-                let upperCased = word.uppercased()
+            self?.filteredPetitions = self?.allPetitions.filter { petition in
+                // Ignores capitalization of searched word
+                let upperCased = searchWord.uppercased()
                 
                 return petition.title.uppercased().contains(upperCased) || petition.body.uppercased().contains(upperCased)
-            }
-            isShowingFilteredPetitions = true
+            } ?? []
+            
+            self?.isShowingFilteredPetitions = true
+            self?.searchWord = searchWord
+            
         }
       
     }
     
     
     @IBAction func doneBarButtonPressed(_ sender: UIBarButtonItem) {
-        // Unfilters the petitons and shows all of them
+        // Unfilters the petitons and shows the original list with all of them
         filteredPetitions = allPetitions
         isShowingFilteredPetitions = false
+        searchWord = nil
     }
     
 }
@@ -224,8 +248,11 @@ extension PetitionsViewController {
     
     override func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         let selectedRow = filteredPetitions[indexPath.row]
+        
+        // Instantiate the detail VC and initializa it's properties
         let detailVC = DetailViewController()
         detailVC.selectedPetition = selectedRow
+        detailVC.searchWord = self.searchWord
         
         navigationController?.pushViewController(detailVC, animated: true)
     }
