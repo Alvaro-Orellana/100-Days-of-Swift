@@ -8,45 +8,38 @@ All of this is totally due to the awesome [Paul Hudson](https://twitter.com/twos
 
 ## Project Index ##
 
-Project 1 - [name pending](https://github.com/Alvaro-Orellana/100-Days-of-Swift/tree/main/Project%201)
+Project 1 - [Storm Viewer](https://github.com/Alvaro-Orellana/100-Days-of-Swift/tree/main/Project%201)
 
-![Alt text](https://media.idownloadblog.com/wp-content/uploads/2018/11/Fake-Call-False-Call-Receive-Call-iPhone.jpg)
+![Alt text](https://github.com/Alvaro-Orellana/100-Days-of-Swift/blob/main/Project%201/storm%20viewer.gif)
 
-Project 2 - [name pending](https://github.com/Alvaro-Orellana/100-Days-of-Swift/tree/main/Project%202)
+Project 2 - [Guess the flag](https://github.com/Alvaro-Orellana/100-Days-of-Swift/tree/main/Project%202)
 
-![Alt text](https://upload.wikimedia.org/wikipedia/en/6/63/IOS_13_Homescreen_iPhone_X.png)
+![Alt text](https://github.com/Alvaro-Orellana/100-Days-of-Swift/blob/main/Project%202/Guess%20the%20flag.gif)
 
-Project 3 - [name pending](https://github.com/Alvaro-Orellana/100-Days-of-Swift/tree/main/Project%203)
 
-![Alt text](https://upload.wikimedia.org/wikipedia/en/6/63/IOS_13_Homescreen_iPhone_X.png)
+Project 4 - [Easy browser](https://github.com/Alvaro-Orellana/100-Days-of-Swift/tree/main/Project%204)
 
-Project 4 - [name pending](https://github.com/Alvaro-Orellana/100-Days-of-Swift/tree/main/Project%204)
+![Alt text](https://github.com/Alvaro-Orellana/100-Days-of-Swift/blob/main/Project%204/Easy%20browser.gif)
 
-![Alt text](https://upload.wikimedia.org/wikipedia/en/6/63/IOS_13_Homescreen_iPhone_X.png)
+Project 5 - [Word scramble](https://github.com/Alvaro-Orellana/100-Days-of-Swift/tree/main/Project%205)
 
-Project 5 - [name pending](https://github.com/Alvaro-Orellana/100-Days-of-Swift/tree/main/Project%205)
+![Alt text](https://github.com/Alvaro-Orellana/100-Days-of-Swift/blob/main/Project%205/Word%20scramble.gif)
 
-![Alt text](https://upload.wikimedia.org/wikipedia/en/6/63/IOS_13_Homescreen_iPhone_X.png)
+Project 6 - [Advanced autolayout](https://github.com/Alvaro-Orellana/100-Days-of-Swift/tree/main/Project%206)
 
-Project 6 - [name pending](https://github.com/Alvaro-Orellana/100-Days-of-Swift/tree/main/Project%206)
+![Alt text](https://github.com/Alvaro-Orellana/100-Days-of-Swift/blob/main/Project%206/Advanced%20autolayout.gif)
 
-![Alt text](https://upload.wikimedia.org/wikipedia/en/6/63/IOS_13_Homescreen_iPhone_X.png)
+Project 7 - [White House petitions](https://github.com/Alvaro-Orellana/100-Days-of-Swift/tree/main/Project%207)
 
-Project 7 - [name pending](https://github.com/Alvaro-Orellana/100-Days-of-Swift/tree/main/Project%207)
+![Alt text](https://github.com/Alvaro-Orellana/100-Days-of-Swift/blob/main/Project%207/white%20house%20petitions.gif)
 
-![Alt text](https://upload.wikimedia.org/wikipedia/en/6/63/IOS_13_Homescreen_iPhone_X.png)
+Project 8 - [Swifty words](https://github.com/Alvaro-Orellana/100-Days-of-Swift/tree/main/Project%208)
 
-Project 8 - [name pending](https://github.com/Alvaro-Orellana/100-Days-of-Swift/tree/main/Project%208)
+![Alt text](https://github.com/Alvaro-Orellana/100-Days-of-Swift/blob/main/Project%208/swifty%20words.gif)
 
-![Alt text](https://upload.wikimedia.org/wikipedia/en/6/63/IOS_13_Homescreen_iPhone_X.png)
+Project 10 - [Names to faces](https://github.com/Alvaro-Orellana/100-Days-of-Swift/tree/main/Project%2010)
 
-Project 9 - [name pending](https://github.com/Alvaro-Orellana/100-Days-of-Swift/tree/main/Project%209)
-
-![Alt text](https://upload.wikimedia.org/wikipedia/en/6/63/IOS_13_Homescreen_iPhone_X.png)
-
-Project 10 - [name pending](https://github.com/Alvaro-Orellana/100-Days-of-Swift/tree/main/Project%2010)
-
-![Alt text](https://upload.wikimedia.org/wikipedia/en/6/63/IOS_13_Homescreen_iPhone_X.png)
+![Alt text](https://github.com/Alvaro-Orellana/100-Days-of-Swift/blob/main/Project%2010/names%20to%20faces.gif)
 
 
 ## Challenges ##
