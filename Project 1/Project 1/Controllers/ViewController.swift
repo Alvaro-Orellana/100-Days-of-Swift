@@ -21,7 +21,6 @@ class ViewController: UITableViewController {
             }
         }
 
-        
         title = "Storm Viewer"
         navigationController?.navigationBar.prefersLargeTitles = true
     }
@@ -88,6 +87,7 @@ class ViewController: UITableViewController {
             navigationController?.pushViewController(detailVC, animated: true)
         }
     }
+  
 
 }
 

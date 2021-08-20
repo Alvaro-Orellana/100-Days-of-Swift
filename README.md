@@ -1,6 +1,6 @@
 # 100-Days-of-Swift 
 
-![img](https://miro.medium.com/max/1838/1*LuY-MMFlMP1RU950-F2D6A.png)
+![img](https://github.com/Alvaro-Orellana/100-Days-of-Swift/blob/main/swift%20logo.png)
 
 This repo is a collection of various mini iOS apps. Each one building on some fundametal aspect of iOS development.
 
@@ -40,19 +40,5 @@ Project 8 - [Swifty words](https://github.com/Alvaro-Orellana/100-Days-of-Swift/
 Project 10 - [Names to faces](https://github.com/Alvaro-Orellana/100-Days-of-Swift/tree/main/Project%2010)
 
 ![Alt text](https://github.com/Alvaro-Orellana/100-Days-of-Swift/blob/main/Project%2010/names%20to%20faces.gif)
-
-
-## Challenges ##
-First Challenge - [name pending](https://github.com/Alvaro-Orellana/100-Days-of-Swift/tree/main/First%20Challenge)
-
-![Alt text](https://upload.wikimedia.org/wikipedia/en/6/63/IOS_13_Homescreen_iPhone_X.png)
-
-Second Challenge - [name pending](https://github.com/Alvaro-Orellana/100-Days-of-Swift/tree/main/Second%20Challenge)
-
-![Alt text](https://upload.wikimedia.org/wikipedia/en/6/63/IOS_13_Homescreen_iPhone_X.png)
-
-Third Challenge - [name pending](https://github.com/Alvaro-Orellana/100-Days-of-Swift/tree/main/Third%20Challenge)
-
-![Alt text](https://upload.wikimedia.org/wikipedia/en/6/63/IOS_13_Homescreen_iPhone_X.png)
 
 

@@ -9,7 +9,7 @@ import UIKit
 
 class DetailViewController: UIViewController {
     
-    var vc: ViewController = ViewController()
+    //var vc: ViewController = ViewController()
 
     @IBOutlet weak var imageView: UIImageView!
     var imageName: String?
