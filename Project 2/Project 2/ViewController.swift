@@ -18,23 +18,30 @@ class ViewController: UIViewController {
     
     var score = 0 {
         didSet {
+            
+            nextQuestion()
+
             if score < 0 {
                 score = 0
             }
             scoreLabel.text = "Score: \(score)"
+
+            
         }
     }
     
     let numberOfQuestionsPerGame = 10
-    
     var correctAnswer = 0
+   
     var questionsAsked = 0 {
         didSet {
             if questionsAsked > numberOfQuestionsPerGame {
                 finishGame()
             }
+
         }
     }
+    
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -68,9 +75,8 @@ class ViewController: UIViewController {
     
     
     @IBAction func shareButtonTouched(_ sender: UIBarButtonItem) {
-        presentAlertController("Score", message: "Current score: \(score)") { _ in
-            return
-        }
+        //presentAlertController("Score", message: "Current score: \(score)")
+        AlertControllerHelper.present(title: "Score", message: "Current score \(score)", controller: self)
     }
     
     
@@ -80,21 +86,20 @@ class ViewController: UIViewController {
         
         if userChoice == correctAnswer {
             score += 1
-           // presentAlertController("Correct", message: "Your score is \(score)", actionHandler: nextQuestion)
-            nextQuestion()
             
         } else {
             score -= 1
-            presentAlertController("Wrong", message: "That's the flag of \(countries[userChoice])", actionHandler: nextQuestion)
+            //presentAlertController("Wrong", message: "That's the flag of \(countries[userChoice])")
+            AlertControllerHelper.present(title: "Wrong", message: "That's the flag of \(countries[userChoice])", controller: self)
         }
     }
     
     
     
-    private func presentAlertController(_ title: String, message: String, actionHandler:  @escaping ((UIAlertAction?) -> Void )) {
+    private func presentAlertController(_ title: String, message: String) {
        
         let alert = UIAlertController(title: title, message: message, preferredStyle: .alert)
-        let action = UIAlertAction(title: "OK", style: .default, handler: actionHandler)
+        let action = UIAlertAction(title: "OK", style: .default)
         
         alert.addAction(action)
         present(alert, animated: true)
@@ -107,10 +112,11 @@ class ViewController: UIViewController {
         
         let gameOverMessage = "You answered correctly \(score) out of \(numberOfQuestionsPerGame) questions "
         
-        presentAlertController("The end", message: gameOverMessage) { _ in
-            self.score = 0
-            self.questionsAsked = 0
-        }
+        //presentAlertController("The end", message: gameOverMessage)
+        AlertControllerHelper.present(title: "The end", message: gameOverMessage, controller: self)
+        self.score = 0
+        self.questionsAsked = 0
+        
     }
     
     

@@ -26,10 +26,15 @@ class DetailViewController: UIViewController {
             imageView.image = UIImage(named: selectedImage)
         }
         
-        
     }
     
 
+    func configure(_ imageName: String, _ selectedPicturePosition: Int, _ totalPictures: Int) {
+        self.imageName = imageName
+        self.selectedPicturePosition = selectedPicturePosition
+        self.totalPictures = totalPictures
+    }
+    
     /*
     // MARK: - Navigation
 

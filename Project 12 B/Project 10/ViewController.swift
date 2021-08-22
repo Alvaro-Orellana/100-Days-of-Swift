@@ -33,6 +33,7 @@ class ViewController: UICollectionViewController {
                 print("Failed to load people")
             }
         }
+        
     }
 
 
@@ -180,6 +181,7 @@ extension ViewController {
         if let savedData = try? jsonEncoder.encode(people) {
             let defaults = UserDefaults.standard
             defaults.set(savedData, forKey: "people")
+       
         } else {
             print("Failed to save people.")
         }
