@@ -9,29 +9,28 @@ import UIKit
 
 class ViewController: UIViewController {
 
+    // MARK: - Outlets
     @IBOutlet weak var button1: UIButton!
     @IBOutlet weak var button2: UIButton!
     @IBOutlet weak var button3: UIButton!
     @IBOutlet weak var scoreLabel: UILabel!
     
+    
+    // MARK: - Varibles
     var countries = ["estonia", "france", "germany", "ireland", "italy", "monaco", "nigeria", "poland", "russia", "spain", "uk", "us"]
+    var correctAnswer = 0
+    let numberOfQuestionsPerGame = 7
+    private let maxScoreKey = "maxScoreKey"
     
     var score = 0 {
         didSet {
-            
-            nextQuestion()
-
             if score < 0 {
                 score = 0
             }
             scoreLabel.text = "Score: \(score)"
-
-            
         }
     }
-    
-    let numberOfQuestionsPerGame = 10
-    var correctAnswer = 0
+
    
     var questionsAsked = 0 {
         didSet {
@@ -43,13 +42,14 @@ class ViewController: UIViewController {
     }
     
     
+    // MARK: - Methods
     override func viewDidLoad() {
         super.viewDidLoad()
-        // Do any additional setup after loading the view.
         setUpButtons()
         nextQuestion()
     }
 
+    
     private func setUpButtons() {
         button1.layer.borderWidth = 2
         button2.layer.borderWidth = 2
@@ -75,48 +75,54 @@ class ViewController: UIViewController {
     
     
     @IBAction func shareButtonTouched(_ sender: UIBarButtonItem) {
-        //presentAlertController("Score", message: "Current score: \(score)")
         AlertControllerHelper.present(title: "Score", message: "Current score \(score)", controller: self)
     }
     
     
     @IBAction func flagTouched(_ sender: UIButton) {
-        
         let userChoice = sender.tag
         
         if userChoice == correctAnswer {
             score += 1
+            nextQuestion()
             
         } else {
             score -= 1
-            //presentAlertController("Wrong", message: "That's the flag of \(countries[userChoice])")
+            nextQuestion()
             AlertControllerHelper.present(title: "Wrong", message: "That's the flag of \(countries[userChoice])", controller: self)
         }
     }
     
     
-    
-    private func presentAlertController(_ title: String, message: String) {
-       
-        let alert = UIAlertController(title: title, message: message, preferredStyle: .alert)
-        let action = UIAlertAction(title: "OK", style: .default)
-        
-        alert.addAction(action)
-        present(alert, animated: true)
-
-    }
-    
-    
-    
     private func finishGame() {
+       
+        
+        
+        let maxScore = getMaxScore()
+        if score > maxScore {
+            setMaxScore(score)
+            AlertControllerHelper.present(title: "New max score!", message: "Congratulations your score: \(score) surpassed the previous max score: \(maxScore)", controller: self)
+        }
         
         let gameOverMessage = "You answered correctly \(score) out of \(numberOfQuestionsPerGame) questions "
-        
-        //presentAlertController("The end", message: gameOverMessage)
         AlertControllerHelper.present(title: "The end", message: gameOverMessage, controller: self)
+        
         self.score = 0
         self.questionsAsked = 0
         
+    }
+    
+    private func getMaxScore() -> Int {
+        let defaults = UserDefaults.standard
+        return defaults.integer(forKey: maxScoreKey)
+     
+    }
+    
+    
+    private func setMaxScore(_ maxScore: Int) {
+        let defaults = UserDefaults.standard
+        defaults.set(maxScore, forKey: maxScoreKey)
+        print("A new score has been saved it value is \(maxScore)")
     }
     
     

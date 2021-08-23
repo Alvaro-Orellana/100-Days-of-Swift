@@ -9,25 +9,34 @@ import UIKit
 
 class ViewController: UITableViewController {
     
+    // MARK: - Variables
     var textManager = TextManager()
     var allWords = [String]()
     var usedWords = [String]()
-
     
-    
+    let titleKeyUserDefaults = "title key"
+    let usedWordsKeyUserDefaults = "used word key "
+  
+   
+    // MARK: - Life cycle
     override func viewDidLoad() {
         super.viewDidLoad()
-        // Do any additional setup after loading the view.
-
+        
         setUpNavigationItem()
         loadWords()
-        newGame()
+        //newGame()
+        loadProgress()
     }
-    
+ 
+    override func viewWillDisappear(_ animated: Bool) {
+        saveProgress()
+    }
 
+    
+    
+    // MARK: - Methods
     private func setUpNavigationItem() {
         navigationItem.leftBarButtonItem = UIBarButtonItem(barButtonSystemItem: .play, target: self, action: #selector(newGame))
-
         navigationItem.rightBarButtonItem = UIBarButtonItem(barButtonSystemItem: .add, target: self, action: #selector(barButtonTouched))
     }
     
@@ -57,8 +66,7 @@ class ViewController: UITableViewController {
         
         alert.addTextField()
         
-        let submitAction = UIAlertAction(title: "Ok", style: .default) {
-            [weak self, weak alert] _ in
+        let submitAction = UIAlertAction(title: "Ok", style: .default) { [weak self, weak alert] _ in
             // Get user typed word from textfield
             guard let typedWord = alert?.textFields?[0].text else { return }
             
@@ -76,12 +84,12 @@ class ViewController: UITableViewController {
     
     private func submit(_ answer: String) {
         
-        let lowerAnswer = answer.lowercased()
-        let lowerTitle = title?.lowercased()
+        let userAnswer = answer.lowercased()
+        let title = title?.lowercased()
         
-        let isWordValid = textManager.isWordValid(lowerAnswer, withTitle: lowerTitle!, usedWords: usedWords)
+        let isWordValid = textManager.isWordValid(userAnswer, withTitle: title!, usedWords: usedWords)
         
-        if isWordValid {
+        if  isWordValid {
             usedWords.insert(answer, at: 0)
             
             let indexPath = IndexPath(row: 0, section: 0)
@@ -103,6 +111,23 @@ class ViewController: UITableViewController {
         tableView.reloadData()
     }
     
+    
+    private func loadProgress() {
+        let defaults = UserDefaults.standard
+        
+        title = defaults.string(forKey: titleKeyUserDefaults) ?? allWords.randomElement()
+        
+        if let savedWordsArray = defaults.array(forKey: usedWordsKeyUserDefaults) as? [String] {
+            usedWords = savedWordsArray
+        }
+    }
+    
+    
+    private func saveProgress() {
+        let defaults = UserDefaults.standard
+        defaults.set(title, forKey: titleKeyUserDefaults)
+        defaults.set(usedWords, forKey: usedWordsKeyUserDefaults)
+    }
 }
 
 
