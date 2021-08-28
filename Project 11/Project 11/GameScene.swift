@@ -7,10 +7,25 @@
 
 import SpriteKit
 
-class GameScene: SKScene, SKPhysicsContactDelegate {
+class GameScene: SKScene {
     
-    private var label : SKLabelNode?
-    private var spinnyNode : SKShapeNode?
+    var scoreLabel: SKLabelNode!
+    var editLabel: SKLabelNode!
+    var score = 0 {
+        didSet {
+            scoreLabel.text = "Score: \(score)"
+        }
+    }
+    
+    var isInEditingMode = false {
+        didSet {
+            if isInEditingMode {
+                editLabel.text = "Done"
+            } else {
+                editLabel.text = "Edit"
+            }
+        }
+    }
     
     
     
@@ -19,6 +34,8 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
         physicsWorld.contactDelegate = self
 
         makeBackGround()
+        configureScoreLabel()
+        configureEditLabel()
         
         makeSlot(at: CGPoint(x: 128, y: 0), isGood: true)
         makeSlot(at: CGPoint(x: 384, y: 0), isGood: false)
@@ -33,7 +50,7 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
     }
     
     
-    func makeBackGround() {
+    private func makeBackGround() {
         let background = SKSpriteNode(imageNamed: "background")
         background.position = CGPoint(x: 512, y: 384)
         background.blendMode = .replace
@@ -41,17 +58,47 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
         addChild(background)
     }
     
+    private func configureScoreLabel() {
+        scoreLabel = SKLabelNode(fontNamed: "Chalkduster")
+        scoreLabel.text = "Score: 0"
+        scoreLabel.horizontalAlignmentMode = .right
+        scoreLabel.position = CGPoint(x: 980, y: 700)
+        addChild(scoreLabel)
+    }
+    
 
+    private func configureEditLabel() {
+        editLabel = SKLabelNode(fontNamed: "Chalkduster")
+        editLabel.text = "Edit"
+        editLabel.horizontalAlignmentMode = .left
+        editLabel.position = CGPoint(x: 80, y: 700)
+        addChild(editLabel)
+    }
+
+    
     override func touchesBegan(_ touches: Set<UITouch>, with event: UIEvent?) {
         guard let firstTouch = touches.first else { return  }
         let location = firstTouch.location(in: self)
-        makeBall(at: location)
+        
+        if nodes(at: location).contains(editLabel) {
+            //User tapped on edit label
+            isInEditingMode.toggle()
+        
+        } else {
+            if isInEditingMode {
+                makeRandomLine(at: location)
+           
+            } else {
+                makeBall(at: location)
+            }
+        }
+        
     }
     
     
     func makeBall(at position: CGPoint) {
         let ball = SKSpriteNode(imageNamed: "ballGreen")
-        ball.position = position
+        ball.position = CGPoint(x: position.x, y: 700)
         ball.physicsBody = SKPhysicsBody(circleOfRadius: ball.size.width / 2)
         ball.physicsBody!.contactTestBitMask = ball.physicsBody!.collisionBitMask
         ball.physicsBody?.restitution = 0.7
@@ -96,7 +143,26 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
         let spinAction = SKAction.repeatForever(.rotate(byAngle: .pi, duration: 10))
         slotGlow.run(spinAction)
     }
+    
+    
+    func makeRandomLine(at position: CGPoint) {
+        let randomColor = UIColor(red: CGFloat.random(in: 0...1), green: CGFloat.random(in: 0...1), blue: CGFloat.random(in: 0...1), alpha: 1)
+        let randomSize = CGSize(width: Int.random(in: 16...128), height: 16)
+        let line = SKSpriteNode(color: randomColor, size: randomSize)
+        
+        line.position = position
+        line.physicsBody = SKPhysicsBody(rectangleOf: line.size)
+        line.physicsBody?.isDynamic = false
+        line.zRotation = CGFloat.random(in: 0...3)
+        addChild(line)
+    }
+    
+}
 
+
+
+// MARK: - SKPhysicsContactDelegate
+extension GameScene: SKPhysicsContactDelegate {
     
     func didBegin(_ contact: SKPhysicsContact) {
         guard let nodeA = contact.bodyA.node else { return }
@@ -113,17 +179,17 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
     
     func collisionBetween(ball: SKNode, object: SKNode) {
         if object.name == "good" {
+            score += 1
             destroy(ball: ball)
       
         } else if object.name == "bad" {
+            score -= 1
             destroy(ball: ball)
         }
     }
 
+    
     func destroy(ball: SKNode) {
         ball.removeFromParent()
     }
-    
-    
-    
 }
