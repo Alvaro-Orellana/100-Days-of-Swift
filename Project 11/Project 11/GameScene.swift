@@ -9,8 +9,12 @@ import SpriteKit
 
 class GameScene: SKScene {
     
+    
+    // MARK: - variables
     var scoreLabel: SKLabelNode!
     var editLabel: SKLabelNode!
+    var numberOfBallsLabel: SKLabelNode!
+    
     var score = 0 {
         didSet {
             scoreLabel.text = "Score: \(score)"
@@ -27,8 +31,18 @@ class GameScene: SKScene {
         }
     }
     
+    let maxNumberOfBallsPerGame = 10
+    lazy var ballCount = maxNumberOfBallsPerGame {
+        didSet {
+            numberOfBallsLabel.text = "Balls: \(ballCount)"
+        }
+    }
+    
+    var imageNames = ["ballBlue", "ballCyan", "ballGreen", "ballGrey", "ballPurple", "ballRed", "ballYellow"]
     
     
+    
+    // MARK: - Methods
     override func didMove(to view: SKView) {
         physicsBody = SKPhysicsBody(edgeLoopFrom: frame)
         physicsWorld.contactDelegate = self
@@ -36,6 +50,7 @@ class GameScene: SKScene {
         makeBackGround()
         configureScoreLabel()
         configureEditLabel()
+        configureNumberOfBallsLabel()
         
         makeSlot(at: CGPoint(x: 128, y: 0), isGood: true)
         makeSlot(at: CGPoint(x: 384, y: 0), isGood: false)
@@ -57,25 +72,9 @@ class GameScene: SKScene {
         background.zPosition = -1
         addChild(background)
     }
-    
-    private func configureScoreLabel() {
-        scoreLabel = SKLabelNode(fontNamed: "Chalkduster")
-        scoreLabel.text = "Score: 0"
-        scoreLabel.horizontalAlignmentMode = .right
-        scoreLabel.position = CGPoint(x: 980, y: 700)
-        addChild(scoreLabel)
-    }
-    
-
-    private func configureEditLabel() {
-        editLabel = SKLabelNode(fontNamed: "Chalkduster")
-        editLabel.text = "Edit"
-        editLabel.horizontalAlignmentMode = .left
-        editLabel.position = CGPoint(x: 80, y: 700)
-        addChild(editLabel)
-    }
 
     
+    // MARK: - Core game logic
     override func touchesBegan(_ touches: Set<UITouch>, with event: UIEvent?) {
         guard let firstTouch = touches.first else { return  }
         let location = firstTouch.location(in: self)
@@ -88,17 +87,23 @@ class GameScene: SKScene {
             if isInEditingMode {
                 makeRandomLine(at: location)
            
-            } else {
+            } else if ballCount > 0  {
                 makeBall(at: location)
+                ballCount -= 1
             }
         }
         
     }
     
+  
+    
     
     func makeBall(at position: CGPoint) {
-        let ball = SKSpriteNode(imageNamed: "ballGreen")
-        ball.position = CGPoint(x: position.x, y: 700)
+                
+        let randomImageName = imageNames.randomElement()!
+        let ball = SKSpriteNode(imageNamed: randomImageName)
+        // X postition is where the user tapped and Y position will be from top of the screen
+        ball.position = CGPoint(x: position.x, y: 720)
         ball.physicsBody = SKPhysicsBody(circleOfRadius: ball.size.width / 2)
         ball.physicsBody!.contactTestBitMask = ball.physicsBody!.collisionBitMask
         ball.physicsBody?.restitution = 0.7
@@ -113,6 +118,7 @@ class GameScene: SKScene {
         bouncer.position = position
         bouncer.physicsBody = SKPhysicsBody(circleOfRadius: bouncer.size.width / 2)
         bouncer.physicsBody?.isDynamic = false
+        
         addChild(bouncer)
     }
     
@@ -154,6 +160,7 @@ class GameScene: SKScene {
         line.physicsBody = SKPhysicsBody(rectangleOf: line.size)
         line.physicsBody?.isDynamic = false
         line.zRotation = CGFloat.random(in: 0...3)
+        line.name = "line"
         addChild(line)
     }
     
@@ -177,19 +184,59 @@ extension GameScene: SKPhysicsContactDelegate {
     }
     
     
-    func collisionBetween(ball: SKNode, object: SKNode) {
+    private func collisionBetween(ball: SKNode, object: SKNode) {
         if object.name == "good" {
             score += 1
+            ballCount += 1
             destroy(ball: ball)
       
         } else if object.name == "bad" {
             score -= 1
             destroy(ball: ball)
+       
+        } else if object.name == "line" {
+            object.removeFromParent()
         }
     }
 
     
-    func destroy(ball: SKNode) {
+    private func destroy(ball: SKNode) {
+        if let fireEffect = SKEmitterNode(fileNamed: "FireParticles") {
+            fireEffect.position = ball.position
+            addChild(fireEffect)
+        }
         ball.removeFromParent()
+    }
+}
+
+
+
+// MARK: - Labels configuration
+extension GameScene {
+    
+    private func configureScoreLabel() {
+        scoreLabel = SKLabelNode(fontNamed: "Chalkduster")
+        scoreLabel.text = "Score: 0"
+        scoreLabel.horizontalAlignmentMode = .right
+        scoreLabel.position = CGPoint(x: 980, y: 700)
+        addChild(scoreLabel)
+    }
+    
+
+    private func configureEditLabel() {
+        editLabel = SKLabelNode(fontNamed: "Chalkduster")
+        editLabel.text = "Edit"
+        editLabel.horizontalAlignmentMode = .left
+        editLabel.position = CGPoint(x: 80, y: 700)
+        addChild(editLabel)
+    }
+    
+    
+    private func configureNumberOfBallsLabel() {
+        numberOfBallsLabel = SKLabelNode(fontNamed: "Chalkduster")
+        numberOfBallsLabel.text = "Balls: \(ballCount)"
+        numberOfBallsLabel.horizontalAlignmentMode = .right
+        numberOfBallsLabel.position = CGPoint(x: 980, y: 600)
+        addChild(numberOfBallsLabel)
     }
 }

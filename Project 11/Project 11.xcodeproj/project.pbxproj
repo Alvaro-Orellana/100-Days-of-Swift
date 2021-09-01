@@ -13,6 +13,8 @@
 		AAF1C52F26D87045008F7F9D /* GameViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = AAF1C52E26D87045008F7F9D /* GameViewController.swift */; };
 		AAF1C53226D87045008F7F9D /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = AAF1C53026D87045008F7F9D /* Main.storyboard */; };
 		AAF1C53426D87047008F7F9D /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = AAF1C53326D87047008F7F9D /* Assets.xcassets */; };
+		AAF1C53C26E0197C008F7F9D /* FireParticles.sks in Resources */ = {isa = PBXBuildFile; fileRef = AAF1C53B26E0197C008F7F9D /* FireParticles.sks */; };
+		AAF1C53E26E01A99008F7F9D /* MagicParticle.sks in Resources */ = {isa = PBXBuildFile; fileRef = AAF1C53D26E01A99008F7F9D /* MagicParticle.sks */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -24,6 +26,8 @@
 		AAF1C53126D87045008F7F9D /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/Main.storyboard; sourceTree = "<group>"; };
 		AAF1C53326D87047008F7F9D /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		AAF1C53526D87047008F7F9D /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		AAF1C53B26E0197C008F7F9D /* FireParticles.sks */ = {isa = PBXFileReference; lastKnownFileType = file.sks; path = FireParticles.sks; sourceTree = "<group>"; };
+		AAF1C53D26E01A99008F7F9D /* MagicParticle.sks */ = {isa = PBXFileReference; lastKnownFileType = file.sks; path = MagicParticle.sks; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -63,6 +67,8 @@
 				AAF1C53026D87045008F7F9D /* Main.storyboard */,
 				AAF1C53326D87047008F7F9D /* Assets.xcassets */,
 				AAF1C53526D87047008F7F9D /* Info.plist */,
+				AAF1C53B26E0197C008F7F9D /* FireParticles.sks */,
+				AAF1C53D26E01A99008F7F9D /* MagicParticle.sks */,
 			);
 			path = "Project 11";
 			sourceTree = "<group>";
@@ -125,6 +131,8 @@
 			buildActionMask = 2147483647;
 			files = (
 				AAF1C53226D87045008F7F9D /* Main.storyboard in Resources */,
+				AAF1C53C26E0197C008F7F9D /* FireParticles.sks in Resources */,
+				AAF1C53E26E01A99008F7F9D /* MagicParticle.sks in Resources */,
 				AAF1C52926D87045008F7F9D /* GameScene.sks in Resources */,
 				AAF1C53426D87047008F7F9D /* Assets.xcassets in Resources */,
 			);

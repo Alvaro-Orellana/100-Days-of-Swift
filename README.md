@@ -41,4 +41,7 @@ Project 10 - [Names to faces](https://github.com/Alvaro-Orellana/100-Days-of-Swi
 
 ![Alt text](https://github.com/Alvaro-Orellana/100-Days-of-Swift/blob/main/Project%2010/names%20to%20faces.gif)
 
+Project 11 - [Pachinko](https://github.com/Alvaro-Orellana/100-Days-of-Swift/tree/main/Project%2011)
+
+![Alt text](https://github.com/Alvaro-Orellana/100-Days-of-Swift/blob/main/Project%2011/pachinko%20game.gif)
 
