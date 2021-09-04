@@ -9,12 +9,17 @@ import UIKit
 
 class ViewController: UICollectionViewController {
     
-    var people = [Person]()
+    var people = [Person]() {
+        didSet{
+            print("people array was set")
+            collectionView.reloadData()
+        }
+    }
     
 
     override func viewDidLoad() {
         super.viewDidLoad()
-        // Do any additional setup after loading the view.
+
         navigationItem.rightBarButtonItem = UIBarButtonItem(barButtonSystemItem: .add, target: self, action: #selector(addImagePressed))
         navigationItem.leftBarButtonItem = UIBarButtonItem(title: "Show people", style: .done, target: self, action: #selector(printAllPeople))
         
@@ -124,7 +129,7 @@ class ViewController: UICollectionViewController {
         do {
             try FileManager.default.removeItem(at: imagePath)
             people.remove(at: index)
-            collectionView.reloadData()
+            //collectionView.reloadData()
 
         } catch {
             print("Couldn't delete image from disk. Error: \(error)")
@@ -161,8 +166,8 @@ extension ViewController {
         do {
             try image.write(to: imagePath)
             people.append(Person(name: "Unknown", imagePath: imageId))
-            self.save()
-            self.collectionView.reloadData()
+            save()
+            //collectionView.reloadData()
         
         } catch  {
             print("Couldn't save image to data. Error: \(error)")
