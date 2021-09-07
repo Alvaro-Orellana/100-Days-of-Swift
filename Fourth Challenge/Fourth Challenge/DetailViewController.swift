@@ -9,18 +9,26 @@ import UIKit
 
 class DetailViewController: UIViewController {
     
+    @IBOutlet weak var imageView: UIImageView!
+    var imageFileName: String!
     
-    init(title: String ) {
+    func setUp(title: String, imageFileName: String) {
         self.title = title
-    
-    }
-    
-    required init?(coder: NSCoder) {
-        fatalError("init(coder:) has not been implemented")
+        //imageView.image = UIImage(named: imageFileName)
+        self.imageFileName = imageFileName
     }
     
     override func viewDidLoad() {
-       // title = "Some title"
         view.backgroundColor = .red
+        let photoPath = getDocumentsDirectory().appendingPathComponent(imageFileName).path
+        imageView.image = UIImage(contentsOfFile: photoPath)
+        
+    }
+    
+  
+    func getDocumentsDirectory() -> URL {
+        let paths = FileManager.default.urls(for: .documentDirectory, in: .userDomainMask)
+        let documentsDirectory = paths[0]
+        return documentsDirectory
     }
 }

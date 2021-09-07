@@ -31,7 +31,7 @@ class GameScene: SKScene {
         }
     }
     
-    let maxNumberOfBallsPerGame = 10
+    let maxNumberOfBallsPerGame = 100
     lazy var ballCount = maxNumberOfBallsPerGame {
         didSet {
             numberOfBallsLabel.text = "Balls: \(ballCount)"
@@ -195,7 +195,7 @@ extension GameScene: SKPhysicsContactDelegate {
             destroy(ball: ball)
        
         } else if object.name == "line" {
-            object.removeFromParent()
+            //object.removeFromParent()
         }
     }
 
