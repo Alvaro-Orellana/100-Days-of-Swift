@@ -47,6 +47,6 @@ Project 11 - [Pachinko](https://github.com/Alvaro-Orellana/100-Days-of-Swift/tre
 
 Project 13 - [Instafilter](https://github.com/Alvaro-Orellana/100-Days-of-Swift/tree/main/Project%2013)
 
-![Alt text](https://github.com/Alvaro-Orellana/100-Days-of-Swift/blob/main/Project%2011/instafilter.gif)
+![Alt text](https://github.com/Alvaro-Orellana/100-Days-of-Swift/blob/main/Project%2013/instafilter.gif)
 
 
