@@ -13,6 +13,7 @@
 		AA29C95626E994D900AF7ABE /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = AA29C95426E994D900AF7ABE /* Main.storyboard */; };
 		AA29C95826E994DA00AF7ABE /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = AA29C95726E994DA00AF7ABE /* Assets.xcassets */; };
 		AA29C95B26E994DA00AF7ABE /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = AA29C95926E994DA00AF7ABE /* LaunchScreen.storyboard */; };
+		AA29C96326EFC19600AF7ABE /* AlertControllerHelper.swift in Sources */ = {isa = PBXBuildFile; fileRef = AA29C96226EFC19600AF7ABE /* AlertControllerHelper.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -24,6 +25,7 @@
 		AA29C95726E994DA00AF7ABE /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		AA29C95A26E994DA00AF7ABE /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
 		AA29C95C26E994DA00AF7ABE /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		AA29C96226EFC19600AF7ABE /* AlertControllerHelper.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AlertControllerHelper.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -59,6 +61,7 @@
 				AA29C94E26E994D900AF7ABE /* AppDelegate.swift */,
 				AA29C95026E994D900AF7ABE /* SceneDelegate.swift */,
 				AA29C95226E994D900AF7ABE /* ViewController.swift */,
+				AA29C96226EFC19600AF7ABE /* AlertControllerHelper.swift */,
 				AA29C95426E994D900AF7ABE /* Main.storyboard */,
 				AA29C95726E994DA00AF7ABE /* Assets.xcassets */,
 				AA29C95926E994DA00AF7ABE /* LaunchScreen.storyboard */,
@@ -139,6 +142,7 @@
 			files = (
 				AA29C95326E994D900AF7ABE /* ViewController.swift in Sources */,
 				AA29C94F26E994D900AF7ABE /* AppDelegate.swift in Sources */,
+				AA29C96326EFC19600AF7ABE /* AlertControllerHelper.swift in Sources */,
 				AA29C95126E994D900AF7ABE /* SceneDelegate.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
