@@ -1,6 +1,5 @@
 # 100-Days-of-Swift 
 
-![img](https://github.com/Alvaro-Orellana/100-Days-of-Swift/blob/main/swift%20logo.png)
 
 This repo is a collection of various mini iOS apps. Each one building on some fundametal aspect of iOS development.
 
